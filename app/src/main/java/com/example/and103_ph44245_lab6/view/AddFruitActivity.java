@@ -46,6 +46,7 @@ public class AddFruitActivity extends AppCompatActivity {
     private String id_Distributor;
     private ArrayList<Distributor> distributorArrayList;
     private ArrayList<File> ds_image;
+    private  Fruit fruit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,14 +89,31 @@ binding.avatar.setOnClickListener(new View.OnClickListener() {
             mapRequestBody.put("description", getRequestBody(_description));
             mapRequestBody.put("id_distributor", getRequestBody(id_Distributor));
             ArrayList<MultipartBody.Part> _ds_image = new ArrayList<>();
-            ds_image.forEach(file1 -> {
-                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),file1);
-                MultipartBody.Part multipartBodyPart = MultipartBody.Part.createFormData("image", file1.getName(),requestFile);
-                _ds_image.add(multipartBodyPart);
-            });
+            if (ds_image.isEmpty()) {
+//                    // Nếu không có ảnh mới, thêm các ảnh cũ vào danh sách
+//                    for (String imagePath : fruit.getImage()) {
+//                        File imageFile = new File(imagePath);
+//                        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
+//                        MultipartBody.Part multipartBodyPart = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
+//                        _ds_image.add(multipartBodyPart);
+//                    }
+                Log.e("aaaaaa", "onClick: Khoon co anh moi" );
+            } else {
+                Log.e("aaaaaa", "onClick:  co anh moi" );
+
+                // Nếu có ảnh mới, thêm các ảnh mới vào danh sách
+                ds_image.forEach(file1 -> {
+                    RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file1);
+                    MultipartBody.Part multipartBodyPart = MultipartBody.Part.createFormData("image", file1.getName(), requestFile);
+                    _ds_image.add(multipartBodyPart);
+                });
+            }
+//            ds_image.forEach(file1 -> {
+//                RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),file1);
+//                MultipartBody.Part multipartBodyPart = MultipartBody.Part.createFormData("image", file1.getName(),requestFile);
+//                _ds_image.add(multipartBodyPart);
+//            });
             httpRequest.callAPI().addFruitWithFileImage(mapRequestBody, _ds_image).enqueue(responseFruit);
-
-
         }
     });
     }

@@ -18,7 +18,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="@android:dimen/app_icon_size"
-        android:background="#FFC107"
+        android:background="#EB8237"
         android:layout_marginBottom="20dp"
         android:gravity="start|center_vertical"
 
@@ -61,6 +61,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_name"
             android:layout_width="match_parent"
+            android:background="@drawable/background_input_editext"
             android:layout_height="wrap_content"
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -76,6 +77,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/ed_quantity"
             android:layout_width="match_parent"
+            android:background="@drawable/background_input_editext"
             android:layout_height="wrap_content"
             />
     </com.google.android.material.textfield.TextInputLayout>
@@ -92,6 +94,7 @@
             android:id="@+id/ed_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_input_editext"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -107,6 +110,7 @@
             android:id="@+id/ed_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_input_editext"
             />
     </com.google.android.material.textfield.TextInputLayout>
     <TextView
@@ -136,6 +140,7 @@
             android:id="@+id/ed_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/background_input_editext"
             />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -146,8 +151,9 @@
         android:id="@+id/btn_register"
         android:text="Submit"
         android:layout_marginTop="20dp"
-        android:backgroundTint="@color/cardview_dark_background"
+        app:backgroundTint="@null"
         android:layout_marginBottom="20dp"
+        android:background="@drawable/background_button_login"
         />
 
 

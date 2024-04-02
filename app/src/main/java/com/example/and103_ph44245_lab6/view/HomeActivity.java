@@ -162,12 +162,25 @@ public class HomeActivity extends AppCompatActivity implements FruitAdapter.Frui
         binding1.edStatus.setText(fruit.getStatus());
         binding1.edDescription.setText(fruit.getQuantity());
 
-        String url  = fruit.getImage().get(0);
-        String newUrl = url.replace("localhost", "192.168.1.65");
-        Glide.with(this)
-                .load(newUrl)
-                .thumbnail(Glide.with(this).load(R.drawable.baseline_broken_image_24))
-                .into(binding1.avatar);
+        if (fruit.getImage().size()!=0){
+            String url  = fruit.getImage().get(0);
+            String newUrl = url.replace("localhost", "192.168.1.65");
+
+            Glide.with(HomeActivity.this)
+                    .load(newUrl)
+                    .thumbnail(Glide.with(HomeActivity.this).load(R.drawable.baseline_broken_image_24))
+                    .into(binding1.avatar);
+//            Log.d("321321", "onBindViewHolder: "+fruit.get_id().getImage().get(0));
+        }else {
+//            String url  = fruit.getImage().get(0);
+//            String newUrl = url.replace("localhost", "192.168.1.65");
+//            Glide.with(this)
+//                    .load(newUrl)
+//                    .thumbnail(Glide.with(this).load(R.drawable.baseline_broken_image_24))
+//                    .into(binding1.avatar);
+        }
+
+
 
         binding1.avatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,11 +209,30 @@ public class HomeActivity extends AppCompatActivity implements FruitAdapter.Frui
                     mapRequestBody.put("id_distributor", getRequestBody(id_Distributor));
 
                     ArrayList<MultipartBody.Part> _ds_image = new ArrayList<>();
-                    ds_image.forEach(file1 -> {
-                        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),file1);
-                        MultipartBody.Part multipartBodyPart = MultipartBody.Part.createFormData("image", file1.getName(),requestFile);
-                        _ds_image.add(multipartBodyPart);
-                    });
+                    if (ds_image.isEmpty()) {
+//                    // Nếu không có ảnh mới, thêm các ảnh cũ vào danh sách
+//                    for (String imagePath : fruit.getImage()) {
+//                        File imageFile = new File(imagePath);
+//                        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), imageFile);
+//                        MultipartBody.Part multipartBodyPart = MultipartBody.Part.createFormData("image", imageFile.getName(), requestFile);
+//                        _ds_image.add(multipartBodyPart);
+//                    }
+                        Log.e("aaaaaa", "onClick: Khoon co anh moi" );
+                    } else {
+                        Log.e("aaaaaa", "onClick:  co anh moi" );
+
+                        // Nếu có ảnh mới, thêm các ảnh mới vào danh sách
+                        ds_image.forEach(file1 -> {
+                            RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"), file1);
+                            MultipartBody.Part multipartBodyPart = MultipartBody.Part.createFormData("image", file1.getName(), requestFile);
+                            _ds_image.add(multipartBodyPart);
+                        });
+                    }
+//                    ds_image.forEach(file1 -> {
+//                        RequestBody requestFile = RequestBody.create(MediaType.parse("image/*"),file1);
+//                        MultipartBody.Part multipartBodyPart = MultipartBody.Part.createFormData("image", file1.getName(),requestFile);
+//                        _ds_image.add(multipartBodyPart);
+//                    });
                     httpRequest.callAPI().updateFruit(fruit.get_id(), mapRequestBody, _ds_image).enqueue(responseFruit);
                     alertDialog.dismiss();
                 }
